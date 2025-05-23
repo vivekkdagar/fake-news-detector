@@ -211,3 +211,18 @@ if os.path.exists("fake.csv") and os.path.exists("true.csv"):
 
 else:
     st.error("❌ Dataset files 'fake.csv' and 'true.csv' not found. Please upload them to proceed.")
+
+    st.markdown("### 📤 Upload Required CSV Files")
+    uploaded_fake = st.file_uploader("Upload `fake.csv`", type="csv", key="fake")
+    uploaded_true = st.file_uploader("Upload `true.csv`", type="csv", key="true")
+
+    if uploaded_fake and uploaded_true:
+        df_fake = pd.read_csv(uploaded_fake)
+        df_true = pd.read_csv(uploaded_true)
+
+        df_fake.to_csv("fake.csv", index=False)
+        df_true.to_csv("true.csv", index=False)
+
+        st.success("✅ Files uploaded successfully! Please reload the app to continue.")
+    else:
+        st.info("⬆️ Please upload both `fake.csv` and `true.csv` to proceed.")
